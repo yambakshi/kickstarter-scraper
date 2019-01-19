@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Kickstarter Scraper{% endblock %}</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="{% static 'kickstarter/app.js' %}"></script>
+    {% block javascript %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'kickstarter/style.css' %}">
+    {% block stylesheet %}{% endblock %}
+</head>
+
+<body>
+    <h1>Most Popular Kickstarter Campaigns</h1>
+    <span>From </span>
+    <select id="hours-selector" onchange="update(this)">
+        {% for i in "x"|ljust:"25" %}
+        <option value="{{ forloop.counter0 }}">{{ forloop.counter0 }}</option>
+        {% endfor %}
+    </select>
+    <span> Hours Ago</span>
+    <h3 id="campaigns-number">Number of Campaigns: {{ campaigns | length }}</h3>
+    <table id="campaigns">
+        <tr>
+            <th>Name</th>
+            <th>Backers</th>
+            <th>Pledged</th>
+        </tr>
+        {% for campaign in campaigns %}
+        <tr>
+            <td>{{ campaign.name }}</td>
+            <td>{{ campaign.backers }}</td>
+            <td>{{ campaign.pledged }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+
+</html>
